@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { buscaRoutes } from './routes/busca.routes';
 import { apiRoutes } from './routes/api.routes';
 import './database/connection'; // Inicializa conexão com banco
+import { initializeDatabase } from './database/init'; // Inicializa banco de dados
 
 dotenv.config();
 
@@ -53,8 +54,20 @@ app.use((_req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📊 Environment: ${process.env.NODE_ENV || 'desenvolvimento'}`);
-  console.log(`🌐 CORS enabled for: ${process.env.NODE_ENV === 'produção' ? process.env.CORS_ORIGIN : 'all origins'}`);
+// Inicializar banco de dados antes de iniciar o servidor
+initializeDatabase().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'desenvolvimento'}`);
+    console.log(`🌐 CORS enabled for: ${process.env.NODE_ENV === 'production' ? process.env.CORS_ORIGIN : 'all origins'}`);
+  });
+}).catch((err) => {
+  console.error('❌ Erro ao inicializar banco de dados:', err);
+  console.error('⚠️ Servidor iniciará mesmo assim, mas pode haver erros ao usar o banco');
+  
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'desenvolvimento'}`);
+    console.log(`🌐 CORS enabled for: ${process.env.NODE_ENV === 'production' ? process.env.CORS_ORIGIN : 'all origins'}`);
+  });
 });

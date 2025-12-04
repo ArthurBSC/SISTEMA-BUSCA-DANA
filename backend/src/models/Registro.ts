@@ -79,9 +79,11 @@ export class Registro {
       const result = await pool.query(
         `SELECT COUNT(*) as total FROM registros WHERE deleted_at IS NULL`
       );
-      return parseInt(result.rows[0].total);
+      return parseInt(result.rows[0].total, 10);
     } catch (error: any) {
       console.error('❌ Erro em count:', error);
+      console.error('Código do erro:', error?.code);
+      console.error('Mensagem:', error?.message);
       throw error;
     }
   }
@@ -93,9 +95,11 @@ export class Registro {
          WHERE status = $1 AND deleted_at IS NULL`,
         [status]
       );
-      return parseInt(result.rows[0].total);
+      return parseInt(result.rows[0].total, 10);
     } catch (error: any) {
       console.error('❌ Erro em countByStatus:', error);
+      console.error('Código do erro:', error?.code);
+      console.error('Mensagem:', error?.message);
       throw error;
     }
   }

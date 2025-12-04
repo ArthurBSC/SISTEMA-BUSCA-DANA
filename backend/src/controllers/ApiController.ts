@@ -12,11 +12,36 @@ export class ApiController {
       res.json(stats);
     } catch (error: any) {
       console.error('❌ Erro ao buscar estatísticas:', error);
-      console.error('Stack:', error.stack);
+      console.error('Tipo do erro:', typeof error);
+      console.error('Erro completo:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+      
+      // Extrair informações do erro de forma segura
+      const errorMessage = error?.message || error?.toString() || 'Erro desconhecido ao buscar estatísticas';
+      const errorCode = error?.code || 'UNKNOWN_ERROR';
+      const isDatabaseError = error?.code === '42P01' || error?.code === '3D000' || error?.code === '28P01';
+      
+      // Mensagem mais amigável baseada no tipo de erro
+      let userMessage = errorMessage;
+      if (isDatabaseError) {
+        if (error.code === '42P01') {
+          userMessage = 'Tabela não encontrada. Execute as migrações do banco de dados.';
+        } else if (error.code === '3D000') {
+          userMessage = 'Banco de dados não encontrado. Verifique as configurações.';
+        } else if (error.code === '28P01') {
+          userMessage = 'Erro de autenticação. Verifique as credenciais do banco de dados.';
+        }
+      }
+      
       res.status(500).json({ 
         error: 'Erro ao buscar estatísticas',
-        message: error.message || 'Erro desconhecido',
-        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        message: userMessage,
+        code: errorCode,
+        details: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production' 
+          ? { 
+              originalMessage: errorMessage,
+              stack: error?.stack 
+            } 
+          : undefined
       });
     }
   }

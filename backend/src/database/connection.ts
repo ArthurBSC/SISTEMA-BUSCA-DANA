@@ -37,22 +37,32 @@ setTimeout(async () => {
     console.log('   Server time:', result.rows[0].now);
     
     // Verificar se a tabela existe
-    const tableCheck = await pool.query(`
-      SELECT EXISTS (
-        SELECT FROM information_schema.tables 
-        WHERE table_schema = 'public' 
-        AND table_name = 'registros'
-      );
-    `);
-    
-    if (tableCheck.rows[0].exists) {
-      console.log('✅ Tabela "registros" encontrada');
-    } else {
-      console.warn('⚠️ Tabela "registros" não encontrada. Execute as migrações!');
+    try {
+      const tableCheck = await pool.query(`
+        SELECT EXISTS (
+          SELECT FROM information_schema.tables 
+          WHERE table_schema = 'public' 
+          AND table_name = 'registros'
+        );
+      `);
+      
+      if (tableCheck.rows[0].exists) {
+        console.log('✅ Tabela "registros" encontrada');
+        
+        // Contar registros
+        const countResult = await pool.query('SELECT COUNT(*) as total FROM registros');
+        console.log(`📊 Total de registros: ${countResult.rows[0].total}`);
+      } else {
+        console.warn('⚠️ Tabela "registros" não encontrada. Execute as migrações!');
+        console.warn('   Execute: npm run migrate');
+      }
+    } catch (tableErr: any) {
+      console.error('❌ Erro ao verificar tabela:', tableErr.message);
     }
   } catch (err: any) {
     console.error('❌ Failed to connect to PostgreSQL:', err.message);
     console.error('   Code:', err.code);
+    console.error('   Stack:', err.stack);
     console.error('💡 Verifique se o PostgreSQL está rodando e as credenciais no .env estão corretas');
   }
 }, 1000);
