@@ -8,12 +8,30 @@
 
 ## Passo 2: Conectar Backend ao PostgreSQL
 
+### Opção A: Usando DATABASE_URL (Recomendado)
+
 1. No painel do Railway, selecione o serviço **"backend"**
 2. Vá na aba **"Variables"**
 3. Clique em **"+ New Variable"**
-4. Você verá uma opção para **"Reference Variable"** ou **"Add from Service"**
-5. Selecione o serviço PostgreSQL que você criou
-6. O Railway adicionará automaticamente as variáveis de conexão
+4. Configure:
+   - **Key**: `DATABASE_URL`
+   - **Value**: Cole a URL de conexão pública do PostgreSQL
+     ```
+     postgresql://postgres:sRHYPJyoOSLllGnbLqVPqvBXVhXVOVrO@caboose.proxy.rlwy.net:25950/railway
+     ```
+5. Clique em **"Add"**
+
+### Opção B: Usando Variáveis Individuais
+
+Se preferir usar variáveis individuais, adicione:
+
+- **PGHOST**: `caboose.proxy.rlwy.net`
+- **PGPORT**: `25950`
+- **PGDATABASE**: `railway`
+- **PGUSER**: `postgres`
+- **PGPASSWORD**: `sRHYPJyoOSLllGnbLqVPqvBXVhXVOVrO`
+
+**Nota**: O código do backend suporta ambas as opções, mas `DATABASE_URL` tem prioridade.
 
 ## Passo 3: Variáveis de Ambiente Necessárias
 
