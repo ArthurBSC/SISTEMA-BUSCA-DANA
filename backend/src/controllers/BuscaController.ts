@@ -111,7 +111,7 @@ function compararPerformance(resultados: Record<string, any>) {
 }
 
 export class BuscaController {
-  static async buscar(req: Request, res: Response) {
+  static async buscar(req: Request, res: Response): Promise<void> {
     try {
       console.log('📥 Request body:', req.body);
       const validated = buscaSchema.parse(req.body);
@@ -160,10 +160,11 @@ export class BuscaController {
     } catch (error: any) {
       console.error('❌ Erro no controller:', error);
       if (error instanceof z.ZodError) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Validation error',
           details: error.errors,
         });
+        return;
       }
       res.status(500).json({ 
         error: 'Internal server error',
@@ -173,7 +174,7 @@ export class BuscaController {
     }
   }
 
-  static async limparCache(req: Request, res: Response) {
+  static async limparCache(_req: Request, res: Response) {
     try {
       BuscaHashMapService.limparCache();
       res.json({ message: 'Cache dos HashMaps limpo com sucesso!' });

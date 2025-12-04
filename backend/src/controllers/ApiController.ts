@@ -5,7 +5,7 @@ import { BuscaIndexadaService } from '../services/BuscaIndexadaService';
 import { BuscaHashMapService } from '../services/BuscaHashMapService';
 
 export class ApiController {
-  static async estatisticas(req: Request, res: Response) {
+  static async estatisticas(_req: Request, res: Response) {
     try {
       console.log('📊 Buscando estatísticas...');
       const stats = await Registro.getEstatisticas();
@@ -20,7 +20,7 @@ export class ApiController {
     }
   }
 
-  static async infoBuscas(req: Request, res: Response) {
+  static async infoBuscas(_req: Request, res: Response) {
     try {
       console.log('ℹ️ Buscando informações sobre buscas...');
       res.json({
