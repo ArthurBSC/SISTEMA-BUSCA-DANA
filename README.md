@@ -1,59 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SearchBench - Sistema de Busca
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema de benchmark de algoritmos de busca desenvolvido com Node.js/TypeScript (backend) e React/TypeScript (frontend), utilizando PostgreSQL como banco de dados.
 
-## About Laravel
+## 🚀 Tecnologias
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Backend
+- Node.js + TypeScript
+- Express.js
+- PostgreSQL
+- node-cache
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Frontend
+- React 18 + TypeScript
+- Vite
+- React Router
+- Axios
+- Lucide React (ícones)
+- jsPDF + jspdf-autotable (exportação PDF)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📋 Funcionalidades
 
-## Learning Laravel
+- **Busca Sequencial**: O(n) - Busca linear em todos os registros
+- **Busca Indexada**: O(log n) - Utiliza índices do PostgreSQL (B-Tree/GIN)
+- **Busca HashMap**: O(1) - Tabela hash em memória com cache
+- **Comparação de Performance**: Compara os tempos de execução dos diferentes algoritmos
+- **Estatísticas Visuais**: Gráficos de pizza e barras para visualização dos dados
+- **Exportação PDF**: Exporta resultados completos em formato PDF
+- **Dark Mode**: Suporte a tema claro e escuro
+- **Interface Responsiva**: Design adaptável para diferentes tamanhos de tela
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🛠️ Instalação
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Pré-requisitos
+- Node.js 18+
+- PostgreSQL 12+
+- npm ou yarn
 
-## Laravel Sponsors
+### Backend
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Configure as variáveis de ambiente no .env
+npm run setup  # Cria o banco de dados
+npm run migrate  # Executa as migrações
+npm run seed  # Popula o banco com dados de teste
+npm run dev  # Inicia o servidor (porta 3001)
+```
 
-### Premium Partners
+### Frontend
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+cd frontend
+npm install
+cp .env.example .env
+# Configure a URL da API no .env
+npm run dev  # Inicia o servidor de desenvolvimento (porta 3000)
+```
 
-## Contributing
+## 📊 Banco de Dados
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+O sistema utiliza PostgreSQL com:
+- Tabela `registros` com mais de 5.000 registros
+- Índices B-Tree para campos únicos
+- Índices GIN para busca full-text
+- Índices compostos para otimização
 
-## Code of Conduct
+## 🎨 Interface
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Sidebar responsivo com menu lateral
+- Cards interativos com animação 3D flip
+- Gráficos visuais para estatísticas
+- Tooltips informativos
+- Animações suaves e transições
 
-## Security Vulnerabilities
+## 📝 Estrutura do Projeto
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+.
+├── backend/
+│   ├── src/
+│   │   ├── controllers/    # Controladores da API
+│   │   ├── services/       # Serviços de busca
+│   │   ├── models/         # Modelos de dados
+│   │   ├── database/       # Migrações e seeders
+│   │   └── routes/         # Rotas da API
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── pages/          # Páginas da aplicação
+│   │   ├── styles/         # Estilos CSS organizados
+│   │   ├── services/       # Serviços de API
+│   │   └── contexts/       # Contextos React
+│   └── package.json
+└── README.md
+```
 
-## License
+## 🔧 Scripts Disponíveis
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Backend
+- `npm run dev` - Inicia servidor de desenvolvimento
+- `npm run build` - Compila TypeScript
+- `npm run setup` - Cria banco de dados
+- `npm run migrate` - Executa migrações
+- `npm run seed` - Popula banco com dados
+- `npm run check-db` - Verifica conexão
+
+### Frontend
+- `npm run dev` - Inicia servidor de desenvolvimento
+- `npm run build` - Build para produção
+- `npm run preview` - Preview do build
+
+## 📄 Licença
+
+Este projeto foi desenvolvido por Arthur Silva.
+
+## 👤 Autor
+
+**Arthur Silva**
+- GitHub: [@ArthurBSC](https://github.com/ArthurBSC)
+

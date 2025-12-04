@@ -1,0 +1,38 @@
+{
+  "name": "searchbench-backend",
+  "version": "1.0.0",
+  "description": "Backend TypeScript para Sistema de Busca",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "create-db": "tsx src/database/create-database.ts",
+    "migrate": "tsx src/database/migrate.ts",
+    "seed": "tsx src/database/seed.ts",
+    "check-db": "tsx src/database/check-connection.ts",
+    "setup": "npm run create-db && npm run migrate && npm run seed",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["typescript", "express", "postgresql", "search"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "node-cache": "^5.1.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^20.10.5",
+    "@types/pg": "^8.10.9",
+    "@types/node-cache": "^4.2.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
+
