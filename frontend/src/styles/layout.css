@@ -1,0 +1,428 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  background: var(--bg-secondary);
+}
+
+.app-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 280px;
+  transition: margin-left 0.3s ease;
+}
+
+.app.sidebar-collapsed .app-wrapper {
+  margin-left: 80px;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  background: #000000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: width 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  position: relative;
+}
+
+.sidebar-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.625rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: auto;
+  min-width: 120px;
+  margin-top: 0.5rem;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar.collapsed .sidebar-toggle {
+  min-width: auto;
+  width: 100%;
+  padding: 0.625rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: opacity 0.3s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+.logo:hover {
+  opacity: 0.9;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar-close-mobile {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-close-mobile:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar.collapsed .logo {
+  justify-content: center;
+}
+
+.sidebar.collapsed .logo-text {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .sidebar-close-mobile {
+    display: none;
+  }
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar.collapsed .sidebar-nav {
+  padding: 1rem 0;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  margin: 0 0.5rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.sidebar-link span {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-link {
+  justify-content: center;
+  padding: 0.875rem;
+}
+
+.sidebar.collapsed .sidebar-link span {
+  display: none;
+}
+
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-left-color: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-link.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-left-color: #ffffff;
+  font-weight: 600;
+}
+
+.sidebar-link-primary {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 0.5rem;
+  border-radius: 8px;
+}
+
+.sidebar.collapsed .sidebar-link-primary {
+  margin: 0.5rem;
+  padding: 0.875rem;
+}
+
+.sidebar-link-primary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar.collapsed .sidebar-link-primary:hover {
+  transform: none;
+}
+
+.sidebar-link-primary.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-footer {
+  padding: 1rem;
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #ffffff;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Botão Hambúrguer Mobile */
+.sidebar-toggle-mobile {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.sidebar-toggle-mobile:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/* Esconde o botão hambúrguer quando sidebar está aberto */
+.sidebar.open ~ .sidebar-toggle-mobile,
+.sidebar.open + .sidebar-toggle-mobile {
+  display: none !important;
+}
+
+/* Overlay Mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* Tooltip */
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: calc(100% + 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #000000;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 350px;
+  min-width: 300px;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.4;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: #000000;
+}
+
+.tooltip-wrapper:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(-50%) translateX(4px);
+}
+
+.tooltip-sidebar {
+  left: calc(100% + 0.5rem);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Footer */
+.footer {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-wrapper {
+    margin-left: 0 !important;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px !important;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    z-index: 1002; /* Garante que sidebar fique acima do overlay */
+  }
+
+  .sidebar.collapsed {
+    width: 280px !important;
+  }
+
+  .sidebar-toggle {
+    display: none; /* Esconde botão de colapsar em mobile */
+  }
+
+  .sidebar-toggle-mobile {
+    display: block;
+  }
+
+  /* Esconde botão hambúrguer quando sidebar está aberto */
+  .sidebar.open ~ * .sidebar-toggle-mobile,
+  .sidebar.open + * .sidebar-toggle-mobile {
+    display: none !important;
+  }
+
+  .sidebar-overlay {
+    display: block;
+    z-index: 1001; /* Abaixo do sidebar mas acima do conteúdo */
+  }
+
+  .main-content {
+    padding: 1rem;
+    margin-top: 3.5rem;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
+  .tooltip {
+    display: none; /* Esconde tooltip em mobile */
+  }
+}
+
