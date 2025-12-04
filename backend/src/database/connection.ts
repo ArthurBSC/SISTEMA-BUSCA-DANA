@@ -30,16 +30,31 @@ console.log(`   Password: ${dbPassword ? '*** (configurada)' : '(vazia - sem sen
 export const pool = new Pool(config);
 
 // Test connection on startup (com delay para evitar erro no início)
-setTimeout(() => {
-  pool.query('SELECT NOW()')
-    .then(() => {
-      console.log('✅ Connected to PostgreSQL');
-    })
-    .catch((err) => {
-      console.error('❌ Failed to connect to PostgreSQL:', err.message);
-      console.error('💡 Verifique se o PostgreSQL está rodando e as credenciais no .env estão corretas');
-      console.error('💡 Veja o arquivo CONFIGURAR-BANCO.md para mais detalhes');
-    });
+setTimeout(async () => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    console.log('✅ Connected to PostgreSQL');
+    console.log('   Server time:', result.rows[0].now);
+    
+    // Verificar se a tabela existe
+    const tableCheck = await pool.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'registros'
+      );
+    `);
+    
+    if (tableCheck.rows[0].exists) {
+      console.log('✅ Tabela "registros" encontrada');
+    } else {
+      console.warn('⚠️ Tabela "registros" não encontrada. Execute as migrações!');
+    }
+  } catch (err: any) {
+    console.error('❌ Failed to connect to PostgreSQL:', err.message);
+    console.error('   Code:', err.code);
+    console.error('💡 Verifique se o PostgreSQL está rodando e as credenciais no .env estão corretas');
+  }
 }, 1000);
 
 pool.on('error', (err) => {

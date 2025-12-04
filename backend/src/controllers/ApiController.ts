@@ -12,10 +12,11 @@ export class ApiController {
       res.json(stats);
     } catch (error: any) {
       console.error('❌ Erro ao buscar estatísticas:', error);
+      console.error('Stack:', error.stack);
       res.status(500).json({ 
         error: 'Erro ao buscar estatísticas',
-        message: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        message: error.message || 'Erro desconhecido',
+        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
       });
     }
   }

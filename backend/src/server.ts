@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { buscaRoutes } from './routes/busca.routes';
 import { apiRoutes } from './routes/api.routes';
+import './database/connection'; // Inicializa conexão com banco
 
 dotenv.config();
 

@@ -102,9 +102,15 @@ export class Registro {
 
   static async getEstatisticas() {
     try {
+      console.log('📊 Iniciando busca de estatísticas...');
       const total = await this.count();
+      console.log(`✅ Total: ${total}`);
+      
       const ativos = await this.countByStatus('ativo');
+      console.log(`✅ Ativos: ${ativos}`);
+      
       const inativos = await this.countByStatus('inativo');
+      console.log(`✅ Inativos: ${inativos}`);
 
       const porEstado = await pool.query(
         `SELECT estado, COUNT(*) as total 
@@ -113,6 +119,7 @@ export class Registro {
          GROUP BY estado 
          ORDER BY total DESC`
       );
+      console.log(`✅ Estados: ${porEstado.rows.length} encontrados`);
 
       return {
         total,
@@ -122,6 +129,9 @@ export class Registro {
       };
     } catch (error: any) {
       console.error('❌ Erro em getEstatisticas:', error);
+      console.error('Mensagem:', error.message);
+      console.error('Código:', error.code);
+      console.error('Stack:', error.stack);
       throw error;
     }
   }
