@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { pool } from './connection';
+import { popularBanco } from './seed-helper';
 
 /**
  * Script de inicialização que verifica e cria a tabela se necessário
@@ -28,7 +29,11 @@ export async function initializeDatabase(): Promise<void> {
       console.log(`📊 Total de registros: ${total}`);
       
       if (total === 0) {
-        console.log('⚠️ Tabela vazia. Execute: npm run seed');
+        console.log('⚠️ Tabela vazia. Iniciando população automática...');
+        // Popular em background para não bloquear o startup
+        popularBanco().catch((err) => {
+          console.error('❌ Erro ao popular banco:', err.message);
+        });
       }
       
       return;
