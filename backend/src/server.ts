@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3001;
 // Middlewares
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN || '*' // Permite todas as origens se não especificado
     : true, // Permite todas as origens em desenvolvimento
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

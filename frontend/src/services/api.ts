@@ -1,12 +1,17 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// URL do backend no Railway ou localhost para desenvolvimento
+const API_URL = import.meta.env.VITE_API_URL || 
+  (import.meta.env.PROD 
+    ? 'https://backend-production-cf10.up.railway.app'
+    : 'http://localhost:3001');
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 30000, // 30 segundos de timeout
 });
 
 export interface BuscaRequest {
@@ -46,6 +51,12 @@ export const buscaApi = {
 
   getInfoBuscas: async () => {
     const response = await api.get('/api/info-buscas');
+    return response.data;
+  },
+  
+  // Método para testar conexão
+  healthCheck: async () => {
+    const response = await api.get('/health');
     return response.data;
   },
 };
