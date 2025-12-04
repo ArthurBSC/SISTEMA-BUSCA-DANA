@@ -7,11 +7,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "create-db": "tsx src/database/create-database.ts",
-    "migrate": "tsx src/database/migrate.ts",
     "seed": "tsx src/database/seed.ts",
-    "check-db": "tsx src/database/check-connection.ts",
-    "setup": "npm run create-db && npm run migrate && npm run seed",
     "typecheck": "tsc --noEmit"
   },
   "keywords": ["typescript", "express", "postgresql", "search"],
